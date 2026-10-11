@@ -5,6 +5,7 @@ import AllJobs from "../pages/AllJobs";
 import AddJob from "../pages/AddJob";
 import MyTasks from "../pages/MyTasks";
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const router = new createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = new createBrowserRouter([
       {
         path: "/login",
         Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
       },
     ],
   },

@@ -39,7 +39,7 @@ const Banner = () => {
                     loop
                     muted
                     playsInline
-                    className="w-full h-[60vh] object-cover brightness-90"
+                    className="w-full h-[75vh] object-cover brightness-90"
                   />
                 </div>
               ))}

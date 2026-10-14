@@ -6,6 +6,7 @@ import AddJob from "../pages/AddJob";
 import MyTasks from "../pages/MyTasks";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import JobDetails from "../pages/JobDetails";
 
 const router = new createBrowserRouter([
   {
@@ -17,11 +18,12 @@ const router = new createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/allJobs",
-        Component: AllJobs,
+        path: "/all-Jobs",
+        element: <AllJobs />,
+        loader: () => fetch("http://localhost:3000/job"),
       },
       {
-        path: "/addJob",
+        path: "/add-Job",
         Component: AddJob,
       },
       {
@@ -35,6 +37,12 @@ const router = new createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/job-details/:id",
+        loader: ({ params }) => fetch(`http://localhost:3000/job/${params.id}`),
+        Component: JobDetails,
+        hydrateFallbackElement: <p>Loading...</p>,
       },
     ],
   },

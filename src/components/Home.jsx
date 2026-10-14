@@ -17,12 +17,12 @@ const Home = () => {
         </h2>
         <div className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-3 p-5">
           {jobs.map((job) => (
-            <SixCard key={job.id} job={job}></SixCard>
+            <SixCard key={job._id} job={job}></SixCard>
           ))}
         </div>
         <div className="flex justify-center items-center">
-          <button className="btn bg-green-400 text-white text-center mb-5">
-            <Link to={"/allJobs"}>See All Jobs</Link>
+          <button class="btn bg-blue-500 text-white border-none transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_#2563eb,0_0_50px_#2563eb,0_0_100px_#2563eb] mb-5">
+            <Link to={"/all-Jobs"}>See All Jobs</Link>
           </button>
         </div>
       </div>

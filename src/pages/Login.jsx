@@ -1,8 +1,51 @@
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import logo from "../assets/e_commerce.jpg";
 import { FcGoogle } from "react-icons/fc";
+import { use, useState } from "react";
+import { AuthContext } from "../contexts/AuthContexts";
+import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
+  const [show, setShow] = useState(false);
+  const { signInUser, signInWithGoogle } = use(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  console.log(location);
+
+  const handleLogIn = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    console.log(email, password);
+
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        e.target.reset();
+        navigate(location.state || "/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    // toast.loading("creatnig user...", { id: "create-user" });
+    signInWithGoogle()
+      .then((result) => {
+        toast.success("User created successfully", { id: "create-user" });
+        console.log(result.user);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message, { id: "create-user" });
+      });
+  };
+
   return (
     <div className="w-full mx-auto flex flex-col md:flex-row">
       <div className="w-full md:w-1/2">
@@ -18,7 +61,7 @@ const Login = () => {
           <h1 className="text-3xl text-white/80 font-bold text-center">
             Create a account
           </h1>
-          <form>
+          <form onSubmit={handleLogIn}>
             <fieldset className="fieldset">
               {/* email field */}
               <label className="label text-base text-white">Email</label>
@@ -29,13 +72,21 @@ const Login = () => {
                 placeholder="Email"
               />
               {/* password field */}
-              <label className="label text-base text-white">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="input w-full focus:border-0 focus:outline-gray-200 "
-                placeholder="Password"
-              />
+              <div className="relative">
+                <label className="label text-base text-white">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  className="input w-full focus:border-0 focus:outline-gray-200 "
+                  placeholder="Password"
+                />
+                <span
+                  onClick={() => setShow(!show)}
+                  className="absolute right-[8px] top-[36px] cursor-pointer z-50"
+                >
+                  {show ? <FaEye /> : <FaEyeSlash />}
+                </span>
+              </div>
               <div>
                 <a className="link link-hover text-base text-white">
                   Forgot password?
@@ -47,7 +98,7 @@ const Login = () => {
             </fieldset>
           </form>
           <button
-            //   onClick={handleGoogleSignIn}
+            onClick={handleGoogleSignIn}
             className="btn bg-white w-full text-black border-[#e5e5e5] mt-2"
           >
             <FcGoogle />
